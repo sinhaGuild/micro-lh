@@ -1,0 +1,21 @@
+services:
+  #Dremio
+  dremio:
+    image: dremio/dremio-oss
+    container_name: dremio-lakehouse
+    ports:
+      - "9047:9047"
+      - "31011:31011"
+      - "45678:45678"
+    volumes:
+      # DB drivers
+      - ./db-drivers/VERTICA/vertica-jdbc-10.0.1-2.jar:/opt/dremio/jars/3rdparty/vertica-jdbc-10.0.1-2.jar
+      - ./db-drivers/SNOWFLAKE/snowflake-jdbc-3.12.9.jar:/opt/dremio/jars/3rdparty/snowflake-jdbc-3.12.9.jar
+      # DB plugins
+      - ./db-drivers/DREMIO/dremio-verticaarp-plugin.jar:/opt/dremio/jars/dremio-verticaarp-plugin.jar
+      - ./db-drivers/DREMIO/dremio-snowflake-plugin.jar:/opt/dremio/jars/dremio-snowflake-plugin.jar
+      # DATA volume
+      - dremio-data:/opt/dremio/data
+
+volumes:
+  dremio-data:
